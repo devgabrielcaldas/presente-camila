@@ -14,11 +14,27 @@
   <!-- Overlay inicial para habilitar o áudio (autoplay-friendly) -->
   <div id="gate">
     <div class="gate-content">
-      <h1>🎁 Presente pra você</h1>
-      <p>Clique para abrir o presente de aniversário</p>
+      <h1>🎁 Presente para você</h1>
+      <p>Camila Ventura, <br>clique para abrir seu presente de aniversário</p>
       <button id="enterBtn" class="btn-primary">Abrir presente</button>
     </div>
   </div>
+
+  <!-- Modal 2: pegadinha do "te amo" (inicialmente escondido) -->
+<div id="loveModal" hidden>
+  <div class="love-content">
+    <h1>😈 Quase lá…</h1>
+    <p>Primeiro diga que <strong>me ama</strong> 💜</p>
+
+    <div class="love-field">
+      <input id="loveInput" type="text" placeholder='Digite aqui' autocomplete="off" />
+      <button id="loveSubmit" class="btn-primary" disabled>Enviar</button>
+    </div>
+
+    <small id="loveHint" class="hint">Dica: duas palavrinhas mágicas 😉</small>
+    <div id="loveError" class="error" aria-live="polite" hidden>Hmm… tenta de novo!</div>
+  </div>
+</div>
 
   <!-- Efeitos de fundo -->
   <div class="bg-gradient"></div>
@@ -34,7 +50,7 @@
       <img src="assets/img/ingresso.png" alt="Ingresso Linkin Park – Pista Premium"/>
       <div class="details">
         <h3>Linkin Park – Brasília</h3>
-        <p>Mané Garincha / Arena BRB - 11/11/2025 <br>Esse presente é seu! 💜</p>
+        <p>Mané Garrincha / Arena BRB - 11/11/2025 <br>Esse presente é seu! 💜</p>
       </div>
     </section>
   </main>

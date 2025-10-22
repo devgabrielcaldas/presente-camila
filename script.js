@@ -5,19 +5,82 @@ const enterBtn = document.getElementById('enterBtn');
 const togglePlay = document.getElementById('togglePlay');
 const toggleMute = document.getElementById('toggleMute');
 
-// 1) Habilitar áudio com o clique no “Abrir presente”
-enterBtn.addEventListener('click', async () => {
-  // Fecha o overlay
+// NOVOS seletores do modal 2
+const loveModal = document.getElementById('loveModal');
+const loveInput  = document.getElementById('loveInput');
+const loveSubmit = document.getElementById('loveSubmit');
+const loveError  = document.getElementById('loveError');
+
+// util: normaliza texto (remove acentos, espaços extras, caixa)
+const norm = (s) => s
+  .normalize('NFD')
+  .replace(/\p{Diacritic}/gu, '')
+  .trim()
+  .toLowerCase();
+
+/* 1) Clique no "Abrir presente" (primeiro modal):
+      - fecha o #gate
+      - abre o modal #loveModal */
+// Quando clica em "Abrir presente"
+enterBtn.addEventListener('click', () => {
   gate.style.opacity = '0';
   gate.style.pointerEvents = 'none';
-  setTimeout(() => (gate.style.display = 'none'), 300);
+  setTimeout(() => (gate.style.display = 'none'), 200);
 
-  // Tenta tocar
-  try {
-    await song.play();
-  } catch (e) {
-    // Se não tocar, mantém o botão de play disponível
-    console.warn('Autoplay bloqueado, use o botão ⏯', e);
+  // Ativa o lock (esconde o resto da página)
+  document.body.setAttribute('data-locked', 'true');
+
+  loveModal.hidden = false;
+  setTimeout(() => loveInput.focus(), 50);
+});
+
+// Quando envia "te amo"
+loveSubmit.addEventListener('click', async () => {
+  const value = norm(loveInput.value);
+  if (value === 'te amo') {
+    loveModal.hidden = true;
+
+    // Libera o conteúdo novamente
+    document.body.removeAttribute('data-locked');
+
+    try {
+      await song.play();
+    } catch (e) {
+      console.warn(e);
+    }
+  } else {
+    loveError.hidden = false;
+    const box = document.querySelector('.love-content');
+    box.classList.remove('shake');
+    void box.offsetWidth;
+    box.classList.add('shake');
+    loveInput.focus();
+  }
+});
+
+/* 2) Habilita o botão "Enviar" quando digitar algo */
+loveInput.addEventListener('input', () => {
+  loveSubmit.disabled = loveInput.value.trim().length === 0;
+  if (!loveSubmit.disabled) {
+    loveError.hidden = true;
+    document.querySelector('.love-content')?.classList.remove('shake');
+  }
+});
+
+/* 3) Valida "te amo" e libera o presente */
+loveSubmit.addEventListener('click', async () => {
+  const value = norm(loveInput.value);
+  if (value === 'te amo') {
+    // fecha o modal de amor
+    loveModal.hidden = true;
+
+    // toca a música e mostra a página
+    try { await song.play(); } catch (e) { console.warn(e); }
+  } else {
+    loveError.hidden = false;
+    const box = document.querySelector('.love-content');
+    box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
+    loveInput.focus();
   }
 });
 
