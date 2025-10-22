@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Presente – Linkin Park</title>
+
+  <!-- Fonte com vibe moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+  <meta name="theme-color" content="#6f3bd9">
+</head>
+<body>
+  <!-- Overlay inicial para habilitar o áudio (autoplay-friendly) -->
+  <div id="gate">
+    <div class="gate-content">
+      <h1>🎁 Presente pra você</h1>
+      <p>Clique para abrir o presente de aniversário</p>
+      <button id="enterBtn" class="btn-primary">Abrir presente</button>
+    </div>
+  </div>
+
+  <!-- Efeitos de fundo -->
+  <div class="bg-gradient"></div>
+  <canvas id="fxCanvas"></canvas>
+
+  <main class="container">
+    <header class="hero">
+      <h2 class="glitch" data-text="Feliz Aniversário!">Feliz Aniversário!</h2>
+      <p class="subtitle">Você ganhou um ingresso para <strong>Pista Premium</strong> 🎸<br>do show do Linkin Park!!</p>
+    </header>
+
+    <section class="ticket">
+      <img src="assets/img/ingresso.png" alt="Ingresso Linkin Park – Pista Premium"/>
+      <div class="details">
+        <h3>Linkin Park – Brasília</h3>
+        <p>Mané Garincha / Arena BRB - 11/11/2025 <br>Esse presente é seu! 💜</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Controles de áudio (discretos) -->
+  <div class="audio-controls">
+    <button id="togglePlay" aria-label="Tocar/Pausar">⏯</button>
+    <button id="toggleMute" aria-label="Mutar/Desmutar">🔇</button>
+  </div>
+
+  <!-- Áudio: começa a tocar após o clique no botão -->
+  <audio id="song" src="assets/audio/the-emptiness-machine.mp3" preload="auto" loop></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

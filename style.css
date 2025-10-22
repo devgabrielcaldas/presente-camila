@@ -1,0 +1,156 @@
+:root{
+  --bg:#0a0a10;
+  --bg-2:#120b1f;
+  --purple:#5122ad; /* roxo base */
+  --purple-2:#9b6bff; /* roxo claro para glow */
+  --text:#e8e6ff;
+  --text-dim:#bdb6d6;
+  --card:#121222;
+  --border:#2a2142;
+  --shadow:0 10px 30px rgba(111,59,217,.25);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background: radial-gradient(1200px 800px at 20% 10%, #1b1133 0%, transparent 60%),
+              radial-gradient(1000px 800px at 80% 90%, #22123f 0%, transparent 60%),
+              linear-gradient(180deg, var(--bg), var(--bg-2));
+  overflow-x:hidden;
+}
+
+/* Overlay de entrada */
+#gate{
+  position:fixed; inset:0; display:grid; place-items:center;
+  background:#0a0a10;          /* 100% opaco */
+  /* backdrop-filter: blur(2px);  opcional: remova o blur para não sugerir conteúdo atrás */
+  z-index:9999;                 /* garante que fica por cima de tudo */
+}
+.gate-content{
+  text-align:center;
+  padding:32px 28px;
+  background: #0f0b1d;
+  border:1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  max-width: 520px; width: 92%;
+}
+.gate-content h1{margin:0 0 10px; font-weight:800; letter-spacing:.5px}
+.gate-content p{margin:0 0 18px; color:var(--text-dim)}
+.btn-primary{
+  appearance:none; border:none; cursor:pointer;
+  padding:12px 22px; border-radius:12px; font-weight:700; letter-spacing:.3px;
+  color:white; background:linear-gradient(135deg, var(--purple), var(--purple-2));
+  box-shadow: 0 6px 18px rgba(111,59,217,.35);
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+.btn-primary:hover{transform:translateY(-2px); filter:brightness(1.05)}
+.btn-primary:active{transform:translateY(0) scale(.98)}
+
+/* Fundo extra e canvas */
+.bg-gradient{
+  position:fixed; inset:0; pointer-events:none; z-index:-1;
+  background: radial-gradient(600px 400px at 70% 30%, rgba(155,107,255,.22), transparent 60%),
+              radial-gradient(500px 350px at 20% 80%, rgba(111,59,217,.18), transparent 60%);
+}
+#fxCanvas{
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+}
+
+/* Layout principal */
+.container{
+  max-width: 980px;
+  margin: 64px auto;
+  padding: 0 20px 80px;
+}
+.hero{
+  text-align:center;
+  margin-top: 40px;
+}
+.hero .subtitle{
+  color: var(--text-dim);
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+}
+
+/* Efeito glitch no título */
+.glitch{
+  display:inline-block;
+  font-size: clamp(2.1rem, 6vw, 4rem);
+  font-weight: 800;
+  position:relative;
+  text-shadow:
+    0 0 12px rgba(155,107,255,.55),
+    0 0 28px rgba(111,59,217,.35);
+}
+.glitch::before,
+.glitch::after{
+  content: attr(data-text);
+  position:absolute; inset:0;
+  mix-blend-mode:screen; opacity:.7;
+  filter: blur(.6px);
+}
+.glitch::before{transform:translate(-1px,-1px); color:#a86bff}
+.glitch::after{transform:translate(1px,1px); color:#6f3bd9}
+@keyframes glitchShake{
+  0%,100%{transform:translate(0,0)} 20%{transform:translate(1px,-1px)}
+  40%{transform:translate(-1px,1px)} 60%{transform:translate(1px,1px)}
+  80%{transform:translate(-1px,-1px)}
+}
+.glitch{animation:glitchShake 3.2s infinite ease-in-out}
+
+/* Card do ingresso */
+.ticket{
+  margin: 36px auto 0;
+  background: linear-gradient(180deg, #0e0b1c, #0a0914);
+  border:1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+.ticket img{
+  width: 100%; height:auto; border-radius: 12px; border:1px solid #251b3a;
+  box-shadow: 0 10px 28px rgba(0,0,0,.45);
+}
+.ticket .details{
+  text-align:center;
+}
+.ticket .details h3{
+  margin: 6px 0 6px;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+}
+.ticket .details p{color:var(--text-dim); margin:0}
+
+/* Controles de áudio */
+.audio-controls{
+  position: fixed;
+  right: 14px; bottom: 14px;
+  display:flex; gap:10px;
+}
+.audio-controls button{
+  appearance:none; border:1px solid var(--border);
+  background:#0e0b1c; color:var(--text);
+  padding:10px 12px; border-radius:12px; cursor:pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,.35);
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+}
+.audio-controls button:hover{
+  transform: translateY(-2px);
+  border-color:#3b2a62;
+}
+
+/* Responsivo */
+@media (min-width: 860px){
+  .ticket{
+    grid-template-columns: 1.1fr .9fr;
+    align-items:center;
+    padding: 26px;
+    gap: 22px;
+  }
+  .ticket .details{ text-align:left; }
+}
